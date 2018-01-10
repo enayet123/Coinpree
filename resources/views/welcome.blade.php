@@ -272,12 +272,12 @@
         <div id="body">
             <div id="crypto">
                 <span contenteditable="true" class="number">1</span>
-                <span contenteditable="true" class="currency">BTC</span>
+                <span spellcheck="false" contenteditable="true" class="currency">BTC</span>
             </div>
             <div class="equals">=</div>
             <div id="fiat">
                 <span contenteditable="true" class="number">0</span>
-                <span contenteditable="true" class="currency">USD</span>
+                <span spellcheck="false" contenteditable="true" class="currency">USD</span>
                 <div class="dropdown">
                     <ul>
                         <li>USD</li>
