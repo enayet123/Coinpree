@@ -139,6 +139,48 @@
             #info * {
                 font-size: 1em;
             }
+            footer {
+                height: 70px;
+                background-color: #999;
+                width: 100%;
+                margin-bottom: 20px;
+                line-height: 70px;
+            }
+            footer a, footer div {
+                display: inline-block;
+                padding: 0;
+                color: white;
+            }
+            .footer-text {
+                width: calc(70vw - 20px);
+                padding-left: 20px;
+                font-family: 'Open Sans', sans-serif;
+            }
+            .social {
+                width: 15vw;
+                text-align: center;
+                -o-transition: background 0.2s ease-in;
+                -ms-transition: background 0.2s ease-in;
+                -moz-transition: background 0.2s ease-in;
+                -webkit-transition: background 0.2s ease-in;
+                transition: background 0.2s ease-in;
+                font-size: 1.2em;
+            }
+            .social:hover {
+                background-color: grey;
+                -o-transition: background 0.2s ease-in;
+                -ms-transition: background 0.2s ease-in;
+                -moz-transition: background 0.2s ease-in;
+                -webkit-transition: background 0.2s ease-in;
+                transition: background 0.2s ease-in;
+            }
+            .linkedin {
+                background-color: #1E83AE;
+                font-weight: bold;
+            }
+            .github {
+                background-color: #24292e;
+            }
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script>
@@ -186,6 +228,21 @@
                 else if (typeof document.selection != "undefined" && document.selection.type == "Text")
                     text = document.selection.createRange().text;
                 return text.length;
+            }
+            // Store todays conversion rates
+            function getConversionRates() {
+                // Parts of API link
+                var link = 'https://api.fixer.io/latest?base=USD&symbols=';
+                var symbols = "USD,GBP,EUR,CAD,AUD,JPY,CNY";
+                // Set USD to base
+                $('.dropdown ul li:first-child').attr('data-rate', 1);
+                // Executes data fetch
+                $.get(link + symbols, function(data) {
+                    // Store exchange rates
+                    $('.dropdown ul li').each(function() {
+                        $(this).attr('data-rate', data.rates[$(this).html()]);
+                    });
+                });
             }
             $(document).ready(function() {
                 // Cryptocurrency type change
@@ -251,6 +308,8 @@
                 // Verify correct padding
                 var size = 'calc(((100vh - 100px) / 2) - ' + ($('#body').height()/2) + 'px) 0';
                 $('#body').css('padding', size);
+                // Get currency conversion rates
+                getConversionRates();
                 // Update every minute
                 setInterval(function() {
                     update();
@@ -315,5 +374,8 @@
                 <p>Although coinpree prices are produced using sources of which are believed to be reliable, no warranty, expressed or implied, is made regarding accuracy, adequacy, completeness, legality, realiability or usefulness. This disclaimer applied to both isolated and aggregate uses of the information. All information on this site is subject to change without notice.</p>
             </div>
         </div>
+        <footer>
+            <div class="footer-text">© 2018 - Coinpree</div><a href="https://uk.linkedin.com/in/enayet-hussain-a150b77a"><div class="linkedin social">in</div></a><a href="https://github.com/enayet123/"><div class="github social">GitHub</div></a>
+        </footer>
     </body>
 </html>
