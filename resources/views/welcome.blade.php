@@ -189,9 +189,8 @@
                 // Parts of API link
                 var link = 'http://portfolicko.com/api/price?';
                 var symbol = "symbol=" + $("#crypto .currency").html();
-                var fiat = "&fiat=" + $("#fiat .currency").html();
                 // Executes data fetch
-                $.get(link + symbol + fiat, function(data) {
+                $.get(link + symbol, function(data) {
                     var res = JSON.parse(data);
                     if (res.error == undefined) {
                         $('#title div:first-child').html(res.cryptocurrency);
@@ -206,7 +205,7 @@
             }
             // Update fiat price of cryptocurrency
             function updateFiat() {
-                $('#fiat .number').html($('#fiat').attr('data-price') * $('#crypto .number').html());
+                $('#fiat .number').html($('#fiat').attr('data-price') * $('#crypto .number').html() * $('#fiat .currency').attr('data-rate'));
                 $('#fiat .number').html(Number(parseFloat($('#fiat .number').html()).toFixed(2)).toLocaleString('en'));
                 document.title = $("#fiat .number").html() + " " + $("#fiat .currency").html() + " Coinpree";
             }
@@ -215,6 +214,10 @@
                 var price = $('#fiat').data('price');
                 $('#crypto .number').html(removeCommas($('#fiat .number').html()) / price);
                 $('#crypto .number').html(Number(parseFloat($('#crypto .number').html()).toFixed(10)).toLocaleString('en'));
+            }
+            // Update fiat currency using exchange rates
+            function updateRate(rate) {
+
             }
             // Returns a number that can be read by inNaN
             function removeCommas(num) {
@@ -299,9 +302,10 @@
                 // New currency selected
                 $('.dropdown ul li').on("click", function() {
                     $('#fiat .currency').html($(this).html());
+                    $('#fiat .currency').attr('data-rate', $(this).data('rate'));
                     $(".dropdown").fadeOut("fast", function() {
                         $("#shade").fadeOut("fast", function() {
-                            update();
+                            updateFiat();
                         });
                     });
                 });
@@ -336,7 +340,7 @@
             <div class="equals">=</div>
             <div id="fiat">
                 <span contenteditable="true" class="number">0</span>
-                <span spellcheck="false" contenteditable="true" class="currency">USD</span>
+                <span spellcheck="false" contenteditable="true" class="currency" data-rate="1">USD</span>
                 <div class="dropdown">
                     <ul>
                         <li>USD</li>
