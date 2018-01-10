@@ -215,10 +215,6 @@
                 $('#crypto .number').html(removeCommas($('#fiat .number').html()) / price);
                 $('#crypto .number').html(Number(parseFloat($('#crypto .number').html()).toFixed(10)).toLocaleString('en'));
             }
-            // Update fiat currency using exchange rates
-            function updateRate(rate) {
-
-            }
             // Returns a number that can be read by inNaN
             function removeCommas(num) {
                 return Number(num.split(",").join(""));
@@ -245,7 +241,22 @@
                     $('.dropdown ul li').each(function() {
                         $(this).attr('data-rate', data.rates[$(this).html()]);
                     });
+                }).always(function() {
+                    // Apply user selected fiat
+                    selectFiat();
                 });
+            }
+            // Applies user selected currency
+            function selectFiat() {
+                var id = "{{ $fiat or 'USD' }}";
+                if (id > "")
+                    $('.dropdown ul li').each(function() {
+                        if (id == $(this).html()) {
+                            $('#fiat .currency').html($(this).html());
+                            $('#fiat .currency').attr('data-rate', $(this).data('rate'));
+                            return false;
+                        }
+                    });
             }
             $(document).ready(function() {
                 // Cryptocurrency type change
@@ -306,6 +317,10 @@
                     $(".dropdown").fadeOut("fast", function() {
                         $("#shade").fadeOut("fast", function() {
                             updateFiat();
+                            if ($('#fiat .currency').html() == "USD")
+                                history.pushState({}, '', '');
+                            else
+                                history.pushState({}, '', $('#fiat .currency').html());
                         });
                     });
                 });
