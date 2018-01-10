@@ -259,6 +259,15 @@
                     });
             }
             $(document).ready(function() {
+                // Prevent styled content entering span
+                $(document).on("DOMNodeInserted", $.proxy(function (e) {
+                    if (e.target.parentNode.getAttribute("contenteditable") === "true") {
+                        with (e.target.parentNode) {
+                            replaceChild(e.target.firstChild, e.target);
+                            normalize();
+                        }
+                    }
+                }, this));
                 // Cryptocurrency type change
                 $('#crypto .currency').on('keyup', function() {
                     // If 3 characters long

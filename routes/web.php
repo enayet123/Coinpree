@@ -12,8 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('compressed');
+    return view('welcome');
 });
 Route::get('/{fiat}', function($fiat) {
-	return view('compressed', ['fiat' => $fiat]);
+	return view('welcome', ['fiat' => $fiat]);
 });
