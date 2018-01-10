@@ -265,7 +265,7 @@
                         with (e.target.parentNode) {
                             replaceChild(e.target.firstChild, e.target);
                             normalize();
-                        }
+                        } 
                     }
                 }, this));
                 // Cryptocurrency type change
