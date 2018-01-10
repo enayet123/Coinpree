@@ -318,7 +318,7 @@
                         $("#shade").fadeOut("fast", function() {
                             updateFiat();
                             if ($('#fiat .currency').html() == "USD")
-                                history.pushState({}, '', '');
+                                history.pushState({}, '', '/');
                             else
                                 history.pushState({}, '', $('#fiat .currency').html());
                         });
