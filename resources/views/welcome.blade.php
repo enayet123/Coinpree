@@ -3,9 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="UTF-8">
+        <meta name="description" content="Cryptocurrency coin price converter">
+        <meta name="keywords" content="Cryptocurrency,Coin,Trading,Blockchain,Bitcoin,BTC">
+        <meta name="author" content="Enayet Hussain">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Coinpree</title>
+        <title>Coinpree - Cryptocurrency price converter</title>
 
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
@@ -194,7 +198,7 @@
                     var res = JSON.parse(data);
                     if (res.error == undefined) {
                         // Update header bar
-                        $('#title div:first-child').html(res.cryptocurrency);
+                        $('#title div:first-child').html(res.name);
                         $('#title div:last-child').html($("#fiat .currency").html());
                         // Store data
                         $('#fiat').attr('data-price', res.price);
@@ -209,7 +213,7 @@
             function updateFiat() {
                 $('#fiat .number').html($('#fiat').attr('data-price') * removeCommas($('#crypto .number').html()) * $('#fiat .currency').attr('data-rate'));
                 $('#fiat .number').html(Number(parseFloat($('#fiat .number').html()).toFixed(2)).toLocaleString('en'));
-                document.title = $("#fiat .number").html() + " " + $("#fiat .currency").html() + " Coinpree";
+                document.title = $("#fiat .number").html() + " " + $("#fiat .currency").html() + " Coinpree - Cryptocurrency price converter";
             }
             // Update amount of cryptocurrency worth in relation to fiat
             function updateCrypto() {
@@ -394,7 +398,7 @@
             <div>
                 <h1>About</h1>
                 <ul>
-                    <li>Coinpree supports hundreds of cryptocurrencies using data from our partner <a href="http://www.portfolicko.com" target="_blank">Portfolicko.com</a>.</li>
+                    <li><a href="/">Coinpree</a> supports hundreds of cryptocurrencies using data from our partner <a href="http://www.portfolicko.com" target="_blank">Portfolicko.com</a>.</li>
                     <li>All prices are initially stored in USD and converted to other currencies using exchange rate data provided by <a href="http://fixer.io" target="_blank">fixer.io</a> on demand.</li>
                     <li>Prices are updated every minute and displayed in the title of the tab allowing you to keep an eye on the price of the cryptocurrency of interest.</li>
                     <li>The price of each currency is the average selling price calculated using multiple exchanges (Typically excluding outliers)</li>
