@@ -193,19 +193,21 @@
                 $.get(link + symbol, function(data) {
                     var res = JSON.parse(data);
                     if (res.error == undefined) {
+                        // Update header bar
                         $('#title div:first-child').html(res.cryptocurrency);
                         $('#title div:last-child').html($("#fiat .currency").html());
+                        // Store data
                         $('#fiat').attr('data-price', res.price);
                         $('#crypto').attr('data-crypto', $("#crypto .currency").html());
                     } else { // Revert currency if not exist
-                        $('#crypto .currency').html($('#crypto').data('crypto'));
+                        $('#crypto .currency').html($('#crypto').attr('data-crypto'));
                     }
                     updateFiat();
                 });
             }
             // Update fiat price of cryptocurrency
             function updateFiat() {
-                $('#fiat .number').html($('#fiat').attr('data-price') * $('#crypto .number').html() * $('#fiat .currency').attr('data-rate'));
+                $('#fiat .number').html($('#fiat').attr('data-price') * removeCommas($('#crypto .number').html()) * $('#fiat .currency').attr('data-rate'));
                 $('#fiat .number').html(Number(parseFloat($('#fiat .number').html()).toFixed(2)).toLocaleString('en'));
                 document.title = $("#fiat .number").html() + " " + $("#fiat .currency").html() + " Coinpree";
             }
@@ -262,10 +264,20 @@
                 // Prevent styled content entering span
                 $(document).on("DOMNodeInserted", $.proxy(function (e) {
                     if (e.target.parentNode.getAttribute("contenteditable") === "true") {
-                        with (e.target.parentNode) {
-                            replaceChild(e.target.firstChild, e.target);
-                            normalize();
-                        } 
+                        var newTextNode = document.createTextNode("");
+                        function antiChrome(node) {
+                            if (node.nodeType == 3) {
+                                newTextNode.nodeValue += node.nodeValue.replace(/(\r\n|\n|\r)/gm, "")
+                            }
+                            else if (node.nodeType == 1 && node.childNodes) {
+                                    for (var i = 0; i < node.childNodes.length; ++i) {
+                                        antiChrome(node.childNodes[i]);
+                                    }
+                            }
+                        }
+                        antiChrome(e.target);
+
+                        e.target.parentNode.replaceChild(newTextNode, e.target);
                     }
                 }, this));
                 // Cryptocurrency type change
@@ -278,7 +290,7 @@
                 });
                 // Cryptocurrency value input change
                 $('#crypto .number').on('keyup', function() {
-                    if (!isNaN($(this).html()))
+                    if (!isNaN(removeCommas($(this).html())))
                         updateFiat($(this).html() * $('#fiat').data('price'));
                 });
                 // Fiat value input change
@@ -341,7 +353,7 @@
                 // Update every minute
                 setInterval(function() {
                     update();
-                }, 60000);
+                }, 10000);
                 update();
             });
         </script>
@@ -359,7 +371,7 @@
         <div id="body">
             <div id="crypto">
                 <span contenteditable="true" class="number">1</span>
-                <span spellcheck="false" contenteditable="true" class="currency">BTC</span>
+                <span spellcheck="false" onclick="document.execCommand('selectAll',false,null)" contenteditable="true" class="currency">BTC</span>
             </div>
             <div class="equals">=</div>
             <div id="fiat">
