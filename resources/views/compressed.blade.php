@@ -4,11 +4,12 @@
 <meta charset=utf-8>
 <meta http-equiv=X-UA-Compatible content="IE=edge">
 <meta charset=UTF-8>
-<meta name=description content="Cryptocurrency coin price converter">
+<meta name=description content="The quickest and simplest way to convert hundreds of cryptocurrencies with a wide range of fiat currencies. Prices are automatically updated and show in the tab of your browser to help keep track of the cryptocurrency of interest. Convert from BTC, XRP, ETH, BCH, etc. to USD, GBP, CNY, JPY, EUR and many more!">
 <meta name=keywords content=Cryptocurrency,Coin,Trading,Blockchain,Bitcoin,BTC>
 <meta name=author content="Enayet Hussain">
 <meta name=viewport content="width=device-width, initial-scale=1">
-<title>Coinpree - Cryptocurrency price converter</title>
+<meta name=google-site-verification content=Csz6X8_dgevRyueUHLfL-qsdi_0b2J-rc0Me0L8JnBI />
+<title>Coinpree - Cryptocurrency price converter and tracker</title>
 <link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png>
 <link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png>
