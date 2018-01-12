@@ -195,13 +195,13 @@
                 var symbol = "symbol=" + $("#crypto .currency").html();
                 // Executes data fetch
                 $.get(link + symbol, function(data) {
-                    var res = JSON.parse(data);
-                    if (res.error == undefined) {
+                    result = data["0"][$("#crypto .currency").html()];
+                    if (data["0"].error == undefined) {
                         // Update header bar
-                        $('#title div:first-child').html(res.name);
+                        $('#title div:first-child').html(result.name);
                         $('#title div:last-child').html($("#fiat .currency").html());
                         // Store data
-                        $('#fiat').attr('data-price', res.price);
+                        $('#fiat').attr('data-price', result.price);
                         $('#crypto').attr('data-crypto', $("#crypto .currency").html());
                     } else { // Revert currency if not exist
                         $('#crypto .currency').html($('#crypto').attr('data-crypto'));
