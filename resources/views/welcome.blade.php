@@ -195,7 +195,7 @@
                 var symbol = "symbol=" + $("#crypto .currency").html();
                 // Executes data fetch
                 $.get(link + symbol, function(data) {
-                    result = data["0"][$("#crypto .currency").html()];
+                    result = data["0"][$("#crypto .currency").html().toUpperCase()];
                     if (data["0"].error == undefined) {
                         // Update header bar
                         $('#title div:first-child').html(result.name);
@@ -357,7 +357,7 @@
                 // Update every minute
                 setInterval(function() {
                     update();
-                }, 10000);
+                }, 60000);
                 update();
             });
         </script>
