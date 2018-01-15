@@ -218,8 +218,7 @@
             }
             // Update amount of cryptocurrency worth in relation to fiat
             function updateCrypto() {
-                var price = $('#fiat').data('price');
-                $('#crypto .number').html(removeCommas($('#fiat .number').html()) / price);
+                $('#crypto .number').html(removeCommas($('#fiat .number').html()) / parseFloat($('#fiat').data('price')*$('#fiat .currency').attr('data-rate')).toFixed(2));
                 $('#crypto .number').html(Number(parseFloat($('#crypto .number').html()).toFixed(10)).toLocaleString('en'));
             }
             // Returns a number that can be read by inNaN
