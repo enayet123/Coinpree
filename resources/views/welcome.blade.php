@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63150348-2"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-63150348-2');
+        </script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="UTF-8">
@@ -218,7 +226,7 @@
             }
             // Update amount of cryptocurrency worth in relation to fiat
             function updateCrypto() {
-                $('#crypto .number').html(removeCommas($('#fiat .number').html()) / parseFloat($('#fiat').data('price')*$('#fiat .currency').attr('data-rate')).toFixed(2));
+                $('#crypto .number').html(removeCommas($('#fiat .number').html()) / parseFloat($('#fiat').attr('data-price')*$('#fiat .currency').attr('data-rate')).toFixed(2));
                 $('#crypto .number').html(Number(parseFloat($('#crypto .number').html()).toFixed(10)).toLocaleString('en'));
             }
             // Returns a number that can be read by inNaN
@@ -265,6 +273,9 @@
                     });
             }
             $(document).ready(function() {
+                // Cryptocurrency change timer
+                var typingTimer;
+                var doneTypingInterval = 3000;  
                 // Prevent styled content entering span
                 $(document).on("DOMNodeInserted", $.proxy(function (e) {
                     if (e.target.parentNode.getAttribute("contenteditable") === "true") {
@@ -280,18 +291,27 @@
                             }
                         }
                         antiChrome(e.target);
-
                         e.target.parentNode.replaceChild(newTextNode, e.target);
                     }
                 }, this));
                 // Cryptocurrency type change
                 $('#crypto .currency').on('keyup', function() {
-                    // If 3 characters long
-                    if ($('#crypto .currency').html().length == 3)
-                        // Not the same currency
-                        if ($('#crypto .currency').html() != $('#crypto').data('crypto'))
-                            update();
+                    // Clear existing timer
+                    clearTimeout(typingTimer);
+                    typingTimer = setTimeout(doneTyping, doneTypingInterval);
                 });
+                $('#crypto .currency').on('keydown', function () {
+                    clearTimeout(typingTimer);
+                });
+                $('#crypto .currency').focusout(function() {
+                    clearTimeout(typingTimer);
+                    doneTyping();
+                });
+                function doneTyping() {
+                    // Not the same currency
+                    if ($('#crypto .currency').html() != $('#crypto').data('crypto'))
+                        update();
+                }
                 // Cryptocurrency value input change
                 $('#crypto .number').on('keyup', function() {
                     if (!isNaN(removeCommas($(this).html())))
@@ -316,11 +336,6 @@
                     // Resize padding
                     var size = 'calc(((100vh - 100px) / 2) - ' + ($('#body').height()/2) + 'px) 0';
                     $('#body').css('padding', size);
-                });
-                // Limit to 3 characters
-                $(".currency").on("keydown", function(event) {
-                    if ($(this).html().length > 2 && event.which != 8 && getSelectedTextLength() == 0)
-                        return false;
                 });
                 // User clicks away on shade
                 $("#shade").on("click", function() {
