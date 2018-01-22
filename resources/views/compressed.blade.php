@@ -1,10 +1,3 @@
-Home | News | Contact | Share
-Source
-Compressed
-Errors
-Messages
- 
-
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -93,18 +86,3 @@ COINPREE
 </footer>
 </body>
 </html>
-Select AllClear
-Compression Ratio: 55%
-20,366 bytes
-11,225 bytes
-Saved: 9,141 bytes
-Download: Here.
-Drag as: compressed.html
-Webmaster tools:
-Single / Multi line PHP string.
-Single / Multi line JavaScript string.
-Restore result.
-W3C x/html validation:
-Validate Original Code
-Validate Compressed Code
-© 2016 HTMLCompressor.com - All rights reserved. Updated: 2016-02-24 (SSL)
