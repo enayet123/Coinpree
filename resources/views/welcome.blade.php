@@ -18,6 +18,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="Csz6X8_dgevRyueUHLfL-qsdi_0b2J-rc0Me0L8JnBI" />
 
+        <!-- Site title will change dynamically -->
         <title>Coinpree - Cryptocurrency price converter and tracker</title>
 
         <!-- Favicon -->
@@ -33,168 +34,8 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,600%7CLato:100,400%7COpen+Sans:300" rel="stylesheet">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                margin: 0;
-                padding: 0;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                background-color: #f8f8f8;
-                width: 100%;
-                min-height: 600px;
-            }
-            header {
-                width: calc(100% - 4em);
-                padding: 2em;
-                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-            }
-            #shade {
-                position: absolute;
-                top: 0;
-                left: 0;
-                background-color: rgba(0, 0, 0, 0.3);
-                width: 100vw;
-                height: 100vh;
-                display: none;
-            }
-            #logo {
-                position: absolute;
-                font-size: 1.3em;
-                border: 1px solid black;
-                border-radius: .125em;
-                box-sizing: content-box;
-                display: inline-block;
-                padding: .1em .125em;
-            }
-            #title {
-                font-size: 1.5em;
-                margin: 0 auto;
-                text-align: center;
-            }
-            #title * {
-                font-weight: bold;
-                display: inline-block;
-            }
-            #body {
-                padding: calc(((100vh - 100px) / 2) - 50px) 0;
-                text-align: center;
-                font-family: 'Lato', sans-serif;
-            }
-            @media screen and (max-width: 800px) {
-                body { font-size: 10px; }
-                #body { font-size: 8px; }
-                .number, .currency { border: 1px; }
-                #logo { font-weight: bold; }
-            }
-            @media screen and (min-width: 800px) {
-                #crypto, #fiat { display: inline-block; }
-            }
-            .number, .currency {
-                display: inline-block;
-                text-align: center;
-                font-size: 4em;
-            }
-            .number, .currency {
-                padding: 10px;
-                display: inline-block;
-                border: 2px solid lightgrey;
-                border-radius: .2em;
-                text-transform: uppercase;
-            }
-            .number {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-                background-color: white;
-                font-weight: 400;
-            }
-            .currency {
-                background-color: #efefef;
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-                font-weight: 200;
-            }
-            .equals {
-                display: inline;
-                font-size: 4.2em !important;
-                padding: 0 0.1em;
-            }
-            .dropdown {
-                display: none;
-                position: absolute;
-                top: calc((100vh / 2) - ((64px * 7) / 2));
-                left: calc((100vw / 2) - 50px);
-                height: 0px;
-                width: 0px;
-            }
-            .dropdown ul {
-                list-style-type: none;
-                padding: 0;
-            }
-            .dropdown ul li {
-                font-size: 40px !important;
-                width: 100px;
-                height: 50px;
-                background-color: #efefef;
-                text-align: center;
-                line-height: 50px;
-                border: 2px solid lightgrey;
-                border-radius: .2em;
-                margin: 5px;
-            }
-            #info {
-                padding: 5vh 5vw;
-                font-family: 'Open Sans', sans-serif;
-            }
-            #info h1 {
-                font-size: 1.5em;
-            }
-            #info * {
-                font-size: 1em;
-            }
-            footer {
-                height: 70px;
-                background-color: #999;
-                width: 100%;
-                margin-bottom: 20px;
-                line-height: 70px;
-            }
-            footer a, footer div {
-                display: inline-block;
-                padding: 0;
-                color: white;
-            }
-            .footer-text {
-                width: calc(70vw - 20px);
-                padding-left: 20px;
-                font-family: 'Open Sans', sans-serif;
-            }
-            .social {
-                width: 15vw;
-                text-align: center;
-                -o-transition: background 0.2s ease-in;
-                -ms-transition: background 0.2s ease-in;
-                -moz-transition: background 0.2s ease-in;
-                -webkit-transition: background 0.2s ease-in;
-                transition: background 0.2s ease-in;
-                font-size: 1.2em;
-            }
-            .social:hover {
-                background-color: grey;
-                -o-transition: background 0.2s ease-in;
-                -ms-transition: background 0.2s ease-in;
-                -moz-transition: background 0.2s ease-in;
-                -webkit-transition: background 0.2s ease-in;
-                transition: background 0.2s ease-in;
-            }
-            .linkedin {
-                background-color: #1E83AE;
-                font-weight: bold;
-            }
-            .github {
-                background-color: #24292e;
-            }
-        </style>
+        <!-- Styles and scripts -->
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script>
             // Updates currency price
@@ -262,9 +103,9 @@
             }
             // Applies user selected currency
             function selectFiat() {
-                var id = "{{ $fiat or 'USD' }}";
+                var id = "{{ $fiat or 'USD' }}"; // Blade inserts user selected currency
                 if (id > "")
-                    $('.dropdown ul li').each(function() {
+                    $('.dropdown ul li').each(function() { // Finds currency
                         if (id == $(this).html()) {
                             $('#fiat .currency').html($(this).html());
                             $('#fiat .currency').attr('data-rate', $(this).data('rate'));
@@ -294,21 +135,20 @@
                         e.target.parentNode.replaceChild(newTextNode, e.target);
                     }
                 }, this));
-                // Cryptocurrency type change
+                // Cryptocurrency type delayed change
                 $('#crypto .currency').on('keyup', function() {
-                    // Clear existing timer
-                    clearTimeout(typingTimer);
-                    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+                    clearTimeout(typingTimer); // Clear existing timer
+                    typingTimer = setTimeout(doneTyping, doneTypingInterval); // Start again
                 });
                 $('#crypto .currency').on('keydown', function () {
-                    clearTimeout(typingTimer);
+                    clearTimeout(typingTimer); // Clear existing timer
                 });
                 $('#crypto .currency').focusout(function() {
-                    clearTimeout(typingTimer);
-                    doneTyping();
+                    clearTimeout(typingTimer); // Clear existing timer
+                    doneTyping(); // Execute early
                 });
                 function doneTyping() {
-                    // Not the same currency
+                    // check it is not the same currency
                     if ($('#crypto .currency').html() != $('#crypto').data('crypto'))
                         update();
                 }
